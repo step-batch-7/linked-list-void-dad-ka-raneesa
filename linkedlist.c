@@ -158,6 +158,39 @@ Element remove_from_end(List_ptr list){
   return remove_from_start(list);
 }
 
+Element remove_element_at(List_ptr list, int position)
+{
+  Element removed_element = NULL;
+  Prev_Current_Pair pair = {NULL, list->first};
+  int count = 0;
+  while (count < list->length)
+  {
+    if (count == position)
+    {
+      removed_element = pair.current->element;
+      pair.prev->next = pair.current->next;
+      list->length--;
+      return removed_element;
+    }
+    pair.prev = pair.current;
+    pair.current = pair.current->next;
+    count++;
+  }
+  return removed_element;
+}
+
+Element remove_at(List_ptr list, int position){
+  if (position == 0)
+  {
+    return remove_from_start(list);
+  }
+  if (position == list->length - 1)
+  {
+    return remove_from_end(list);
+  }
+  return remove_element_at(list, position);
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;
