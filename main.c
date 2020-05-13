@@ -72,5 +72,9 @@ int main(){
   printf("\nremove from end:\n");
   remove_at(list, 2);
   display_list(list);
+
+  printf("\nremove first occurrance:\n");
+  remove_first_occurrence(list, ptr_to_numbers + 2, &are_elements_equal);
+  display_list(list);
   return 0;
 }

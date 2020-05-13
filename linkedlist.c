@@ -191,6 +191,15 @@ Element remove_at(List_ptr list, int position){
   return remove_element_at(list, position);
 }
 
+Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher){
+  int position = search_position(list, element, matcher);
+  if (position != -1)
+  {
+    return remove_at(list, position);
+  }
+  return NULL;
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;
