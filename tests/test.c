@@ -223,6 +223,49 @@ void test_remove_from_end(List_ptr list)
   clear_list(list);
 }
 
+void test_remove_at(List_ptr list)
+{
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  int *num3 = malloc(sizeof(int));
+  int *num4 = malloc(sizeof(int));
+  int *num5 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  *num3 = 3;
+  *num4 = 4;
+  *num5 = 5;
+  add_to_list(list, &num1);
+  add_to_list(list, &num2);
+  add_to_list(list, &num3);
+  add_to_list(list, &num4);
+  add_to_list(list, &num5);
+
+  PRINT_STRING("\nremove_at");
+
+  int status = are_elements_equal(remove_at(list, 4), &num5);
+  status = status && assert(list->length, 4);
+  display_assertion(status, "should remove the given number at the end of the list");
+
+  status = are_elements_equal(remove_at(list, 0), &num1);
+  status = status && assert(list->length, 3);
+  display_assertion(status, "should remove the given number at the beginning of the list");
+
+  status = are_elements_equal(remove_at(list, 1), &num3);
+  status = status && assert(list->length, 2);
+  display_assertion(status, "should remove the given number at the given position of the list");
+
+  status = are_elements_equal(remove_at(list, 9), NULL);
+  status = status && assert(list->length, 2);
+  display_assertion(status, "should not remove the given number if the given position is below 0");
+
+  status = are_elements_equal(remove_at(list, -9), NULL);
+  status = status && assert(list->length, 2);
+  display_assertion(status, "should not remove the given number if the given position is above list count");
+
+  clear_list(list);
+}
+
 int main(void){
   List_ptr list = create_list();
 
@@ -233,6 +276,7 @@ int main(void){
   test_insert_at(list);
   test_remove_from_start(list);
   test_remove_from_end(list);
+  test_remove_at(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
