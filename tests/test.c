@@ -78,12 +78,33 @@ void test_add_to_list(List_ptr list){
   clear_list(list);
 }
 
+void test_add_to_start(List_ptr list){
+  PRINT_STRING("Add to beggining of list:");
+
+  int *num1 = malloc(sizeof(int));
+  *num1 = 1;
+  int status = assert(add_to_start(list, &num1), Success);
+  status = status && assert(search_position(list, &num1), 0);
+  status = status && assert(list->length, 1);
+  display_assertion(status, "should add the given number at the beginning if list is empty of the list");
+
+  int *num2 = malloc(sizeof(int));
+  *num2 = 2;
+  status = assert(add_to_start(list, &num2), Success);
+  status = status && assert(search_position(list, &num2), 0);
+  status = status && assert(list->length, 2);
+  display_assertion(status, "should add the given number at the begginging of the list\n");
+
+  clear_list(list);
+}
+
 int main(void){
   List_ptr list = create_list();
-  
+
   test_clear_list(list);
   test_search_node(list);
   test_add_to_list(list);
+  test_add_to_start(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);

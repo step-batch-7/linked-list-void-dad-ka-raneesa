@@ -32,5 +32,9 @@ int main(){
   }
   clear_list(list);
   display_list(list);
+  for(int i = 0; i < length; i++){
+    add_to_start(list, ptr_to_numbers + i);
+    display_list(list);
+  }
   return 0;
 }
