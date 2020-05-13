@@ -19,5 +19,7 @@ void display_assertion(Status assertion_status, char *message);
 void test_clear_list(List_ptr list);
 void test_search_node(List_ptr list);
 void test_add_to_list(List_ptr list);
+void test_add_to_start(List_ptr list);
+void test_insert_at(List_ptr list);
 
 #endif

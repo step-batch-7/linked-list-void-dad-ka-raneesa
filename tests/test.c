@@ -98,6 +98,53 @@ void test_add_to_start(List_ptr list){
   clear_list(list);
 }
 
+void test_insert_at(List_ptr list)
+{
+  int *num1 = malloc(sizeof(int));
+  *num1 = 1;
+  int *num2 = malloc(sizeof(int));
+  *num2 = 2;
+  add_to_list(list, &num1);
+  add_to_list(list, &num2);
+
+  PRINT_STRING("insert_at");
+
+  int *num3 = malloc(sizeof(int));
+  *num3 = 3;
+  int status = assert(insert_at(list, &num3, 2), Success);
+  status = status && assert(search_position(list, &num3), 2);
+  status = status && assert(list->length, 3);
+  display_assertion(status, "should add the given number at the end of the list");
+
+  int *num4 = malloc(sizeof(int));
+  *num4 = 4;
+  status = assert(insert_at(list, &num4, 0), Success);
+  status = status && assert(search_position(list, &num4), 0);
+  status = status && assert(list->length, 4);
+  display_assertion(status, "should add the given number at the beginning of the list");
+
+  int *num5 = malloc(sizeof(int));
+  *num5 = 5;
+  status = assert(insert_at(list, &num5, 2), Success);
+  status = status && assert(search_position(list, &num5), 2);
+  status = status && assert(list->length, 5);
+  display_assertion(status, "should add the given number at the given position of the list");
+
+  int *num6 = malloc(sizeof(int));
+  *num6 = 6;
+  status = assert(insert_at(list, &num6, 9), Failure);
+  status = status && assert(search_position(list, &num6), -1);
+  status = status && assert(list->length, 5);
+  display_assertion(status, "should not add the given number if the given position is below 0");
+
+  status = assert(insert_at(list, &num6, -9), Failure);
+  status = status && assert(search_position(list, &num6), -1);
+  status = status && assert(list->length, 5);
+  display_assertion(status, "should not add the given number if the given position is above list count");
+
+  clear_list(list);
+}
+
 int main(void){
   List_ptr list = create_list();
 
@@ -105,6 +152,7 @@ int main(void){
   test_search_node(list);
   test_add_to_list(list);
   test_add_to_start(list);
+  test_insert_at(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
