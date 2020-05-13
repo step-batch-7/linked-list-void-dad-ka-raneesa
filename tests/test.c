@@ -178,6 +178,24 @@ void test_add_unique(List_ptr list)
   clear_list(list);
 }
 
+void test_remove_from_start(List_ptr list)
+{
+  int *num = malloc(sizeof(int));
+  *num = 1;
+  add_to_list(list, &num);
+
+  PRINT_STRING("\nremove_from_start");
+
+  int status = are_elements_equal(remove_from_start(list), &num);
+  status = status && assert(list->length, 0);
+  display_assertion(status, "should remove the first item from the list");
+
+  status = are_elements_equal(remove_from_start(list), NULL);
+  status = status && assert(list->length, 0);
+  display_assertion(status, "should not remove the item from the list if the list is empty");
+
+  clear_list(list);
+}
 
 int main(void){
   List_ptr list = create_list();
@@ -187,6 +205,7 @@ int main(void){
   test_add_to_list(list);
   test_add_to_start(list);
   test_insert_at(list);
+  test_remove_from_start(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
