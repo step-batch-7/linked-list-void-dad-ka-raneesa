@@ -200,6 +200,32 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
   return NULL;
 }
 
+Status check_is_exist(List_ptr list, Element element, Matcher matcher)
+{
+  int position = search_position(list, element, matcher);
+  if (position != -1)
+  {
+    return Success;
+  }
+  return Failure;
+}
+
+List_ptr remove_all_occurrences(List_ptr list, Element element, Matcher matcher){
+  int count = 0;
+  int position;
+  if (check_is_exist(list, element, matcher))
+  {
+    while (count < list->length)
+    {
+      position = search_position(list, element, matcher);
+      remove_at(list, position);
+      if (position == -1)
+        return list;
+    }
+  }
+  return NULL;
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;

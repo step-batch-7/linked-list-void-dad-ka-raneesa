@@ -76,5 +76,10 @@ int main(){
   printf("\nremove first occurrance:\n");
   remove_first_occurrence(list, ptr_to_numbers + 2, &are_elements_equal);
   display_list(list);
+
+  printf("\nremove first occurrance:\n");
+  add_to_list(list, ptr_to_numbers + 2);
+  remove_all_occurrences(list, ptr_to_numbers + 2, &are_elements_equal);
+  display_list(list);
   return 0;
 }
