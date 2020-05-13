@@ -4,6 +4,7 @@
 
 void display_node(Node_ptr node);
 void display_list(List_ptr list);
+Status are_elements_equal(Element element1, Element element2);
 
 void display_node(Node_ptr node)
 {
@@ -53,7 +54,7 @@ int main(){
   display_list(list);
   insert_at(list, ptr_to_numbers + 1, 5);
   display_list(list);
-  
+
   printf("\nadd unique:\n");
   add_unique(list, ptr_to_numbers + 1, &are_elements_equal);
   display_list(list);
