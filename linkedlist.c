@@ -109,6 +109,32 @@ int search_position(List_ptr list, Element element, Matcher matcher){
   return -1;
 }
 
+Status remove_from_empty_list(Node_ptr node)
+{
+  if (node == NULL)
+  {
+    return Failure;
+  }
+  return Success;
+}
+
+Element remove_from_start(List_ptr list)
+{ 
+  Element removed_element = NULL;
+  if (remove_from_empty_list(list->first))
+  {
+    removed_element = list->first->element;
+    Node_ptr next_node = list->first->next;
+    if (list->length == 1)
+    {
+      list->last = next_node;
+    }
+    list->first = next_node;
+    list->length--;
+  }
+  return removed_element;
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;

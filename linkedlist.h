@@ -78,4 +78,5 @@ Node_ptr create_node(Element data);
 Status add_in_empty_list(List_ptr list, Node_ptr new_node);
 Status are_elements_equal(Element element1, Element element2);
 int search_position(List_ptr list, Element element, Matcher matcher);
+Status remove_from_empty_list(Node_ptr node);
 #endif

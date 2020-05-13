@@ -60,5 +60,9 @@ int main(){
   display_list(list);
   add_unique(list, ptr_to_numbers + 3, &are_elements_equal);
   display_list(list);
+
+  printf("\nremove from start:\n");
+  remove_from_start(list);
+  display_list(list);
   return 0;
 }
