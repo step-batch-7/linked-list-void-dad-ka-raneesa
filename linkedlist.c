@@ -23,6 +23,7 @@ Status add_in_empty_list(List_ptr list, Node_ptr new_node)
   if (list->first == NULL)
   {
     list->first = new_node;
+    list->last = new_node;
     return Success;
   }
   return Failure;
@@ -33,8 +34,8 @@ Status add_to_list(List_ptr list, Element element)
   Node_ptr new_node = create_node(element);
   if(!add_in_empty_list(list, new_node)){
     list->last->next = new_node;
+    list->last = new_node;
   }
-  list->last = new_node;
   list->length++;
   return Success;
 }
@@ -50,6 +51,33 @@ Status add_to_start(List_ptr list, Element element)
   }
   list->length++;
   return Success;
+}
+
+Status insert_at(List_ptr list, Element element, int position){
+  if (position != 0)
+  {
+    Prev_Current_Pair pair = {NULL, list->first};
+    int count = 0;
+    while (count < list->length)
+    {
+      if (count == position)
+      {
+        Node_ptr new_node = create_node(element);
+        pair.prev->next = new_node;
+        new_node->next = pair.current;
+        list->length++;
+        return Success;
+      }
+      pair.prev = pair.current;
+      pair.current = pair.current->next;
+      count++;
+    }
+    if(position == count){
+      return add_to_list(list, element);
+    }
+    return Failure;
+  }
+  return add_to_start(list, element);
 }
 
 Status are_elements_equal(Element element1, Element element2)

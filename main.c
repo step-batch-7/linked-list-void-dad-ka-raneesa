@@ -26,15 +26,24 @@ int main(){
   Int_ptr ptr_to_numbers = numbers;
   int length = sizeof(numbers)/sizeof(int);
   List_ptr list = create_list();
+  printf("add to list:\n");
   for(int i = 0; i < length; i++){
     add_to_list(list, ptr_to_numbers + i);
     display_list(list);
   }
   clear_list(list);
   display_list(list);
+  printf("\nadd to start:\n");
   for(int i = 0; i < length; i++){
     add_to_start(list, ptr_to_numbers + i);
     display_list(list);
   }
+  printf("\ninsert at:\n");
+  insert_at(list, ptr_to_numbers, 0);
+  display_list(list);
+  insert_at(list, ptr_to_numbers + 2, 2);
+  display_list(list);
+  insert_at(list, ptr_to_numbers + 1, 5);
+  display_list(list);
   return 0;
 }
