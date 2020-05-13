@@ -266,6 +266,30 @@ void test_remove_at(List_ptr list)
   clear_list(list);
 }
 
+void test_remove_first_occurrence(List_ptr list)
+{
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  add_to_list(list, &num1);
+  add_to_list(list, &num2);
+
+  PRINT_STRING("\nremove_first_occurrence");
+
+  int status = are_elements_equal(remove_first_occurrence(list, &num1, &are_elements_equal), &num1);
+  status = status && assert(search_position(list, &num1, &are_elements_equal), -1);
+  status = status && assert(list->length, 1);
+  display_assertion(status, "should remove first occurrence of the given number in the list if exists");
+
+  status = are_elements_equal(remove_first_occurrence(list, &num1, &are_elements_equal), NULL);
+  status = status && assert(search_position(list, &num1, &are_elements_equal), -1);
+  status = status && assert(list->length, 1);
+  display_assertion(status, "should not remove first occurrence of the given number in the list if not exists");
+
+  clear_list(list);
+}
+
 int main(void){
   List_ptr list = create_list();
 
@@ -277,6 +301,7 @@ int main(void){
   test_remove_from_start(list);
   test_remove_from_end(list);
   test_remove_at(list);
+  test_remove_first_occurrence(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
