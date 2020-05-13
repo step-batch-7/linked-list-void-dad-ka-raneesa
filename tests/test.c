@@ -161,6 +161,13 @@ void test_add_unique(List_ptr list)
   int status = assert(add_unique(list, &num1, &are_elements_equal), Success);
   status = status && assert(search_position(list, &num1, &are_elements_equal), 0);
   status = status && assert(list->length, 1);
+  display_assertion(status, "should add the given number in the list if list is empty");
+
+  int *num2 = malloc(sizeof(int));
+  *num2 = 2;
+  status = assert(add_unique(list, &num2, &are_elements_equal), Success);
+  status = status && assert(search_position(list, &num2, &are_elements_equal), 1);
+  status = status && assert(list->length, 2);
   display_assertion(status, "should add the given number in the list if not exists");
 
   status = assert(add_unique(list, &num1, &are_elements_equal), Failure);
