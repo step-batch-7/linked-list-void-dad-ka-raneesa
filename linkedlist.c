@@ -39,6 +39,19 @@ Status add_to_list(List_ptr list, Element element)
   return Success;
 }
 
+Status add_to_start(List_ptr list, Element element)
+{
+  Node_ptr new_node = create_node(element);
+  if (!add_in_empty_list(list, new_node))
+  {
+    Node_ptr start_node = list->first;
+    list->first = new_node;
+    list->first->next = start_node;
+  }
+  list->length++;
+  return Success;
+}
+
 Status are_elements_equal(Element element1, Element element2)
 {
   Int_ptr num1 = (Int_ptr)element1;
