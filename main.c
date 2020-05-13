@@ -64,5 +64,9 @@ int main(){
   printf("\nremove from start:\n");
   remove_from_start(list);
   display_list(list);
+
+  printf("\nremove from end:\n");
+  remove_from_end(list);
+  display_list(list);
   return 0;
 }

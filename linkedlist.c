@@ -135,6 +135,29 @@ Element remove_from_start(List_ptr list)
   return removed_element;
 }
 
+Element remove_from_end(List_ptr list){
+  if (list->length != 1 && list->length != 0)
+  {
+    Element removed_element;
+    int count = 1;
+    Node_ptr p_walk = list->first;
+    while (p_walk != NULL)
+    {
+      if (count == list->length - 1)
+      {
+        removed_element = p_walk->next->element;
+        p_walk->next = NULL;
+        list->last = p_walk;
+        list->length--;
+      }
+      p_walk = p_walk->next;
+      count++;
+    }
+    return removed_element;
+  }
+  return remove_from_start(list);
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;
