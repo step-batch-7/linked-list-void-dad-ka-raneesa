@@ -21,10 +21,18 @@ void display_list(List_ptr list){
   printf("\n");
 }
 
+
+Status are_elements_equal(Element element1, Element element2)
+{
+  Int_ptr num1 = (Int_ptr)element1;
+  Int_ptr num2 = (Int_ptr)element2;
+  return num1 == num2;
+}
+
 int main(){
-  int numbers[] = {1,2,3};
+  int numbers[] = {1,2,3,4};
   Int_ptr ptr_to_numbers = numbers;
-  int length = sizeof(numbers)/sizeof(int);
+  int length = 3;
   List_ptr list = create_list();
   printf("add to list:\n");
   for(int i = 0; i < length; i++){
@@ -44,6 +52,12 @@ int main(){
   insert_at(list, ptr_to_numbers + 2, 2);
   display_list(list);
   insert_at(list, ptr_to_numbers + 1, 5);
+  display_list(list);
+  
+  printf("\nadd unique:\n");
+  add_unique(list, ptr_to_numbers + 1, &are_elements_equal);
+  display_list(list);
+  add_unique(list, ptr_to_numbers + 3, &are_elements_equal);
   display_list(list);
   return 0;
 }

@@ -80,19 +80,26 @@ Status insert_at(List_ptr list, Element element, int position){
   return add_to_start(list, element);
 }
 
-Status are_elements_equal(Element element1, Element element2)
+Status add_unique(List_ptr list, Element element, Matcher matcher)
 {
-  Int_ptr num1 = (Int_ptr)element1;
-  Int_ptr num2 = (Int_ptr)element2;
-  return num1 == num2;
+  Node_ptr p_walk = list->first;
+  while (p_walk != NULL)
+  {
+    if (matcher(p_walk->element, element))
+    {
+      return Failure;
+    }
+    p_walk = p_walk->next;
+  }
+  return add_to_list(list, element);
 }
 
-int search_position(List_ptr list, Element element){
+int search_position(List_ptr list, Element element, Matcher matcher){
   Node_ptr p_walk = list->first;
   int position = 0;
   while (p_walk != NULL)
   {
-    if (are_elements_equal(p_walk->element, element))
+    if (matcher(p_walk->element, element))
     {
       return position;
     }
