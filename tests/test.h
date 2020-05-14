@@ -12,7 +12,7 @@
 int PASSING_TESTS = 0;
 int FAILING_TESTS = 0;
 
-Status are_elements_equal(Element element1, Element element2);
+Status assert_element(Element element1, Element element2);
 Status assert(int actual, int expected);
 void display_assertion(Status assertion_status, char *message);
 
