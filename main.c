@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 
-void display_node(Node_ptr node);
+void display_element(Element element);
 void display_list(List_ptr list);
 Status are_elements_equal(Element element1, Element element2);
 
-void display_node(Node_ptr node)
+void display_element(Element element)
 {
-  Int_ptr number = (Int_ptr)node->element;
+  Int_ptr number = (Int_ptr)element;
   printf("%d ", *number);
 }
 
@@ -16,7 +16,7 @@ void display_list(List_ptr list){
   printf("list : ");
   Node_ptr p_walk = list->first;
   while(p_walk != NULL){
-    display_node(p_walk);
+    display_element(p_walk->element);
     p_walk = p_walk->next;
   }
   printf("\n");
@@ -87,5 +87,8 @@ int main(){
   printf("\nreverse the list:\n");
   result = reverse(list);
   display_list(result);
+
+  printf("\nForeach\n");
+  forEach(list, &display_element);
   return 0;
 }
