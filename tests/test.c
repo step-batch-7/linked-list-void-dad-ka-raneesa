@@ -224,6 +224,8 @@ void test_remove_from_start(List_ptr list)
   Element result = NULL;
   status = assert_element(remove_from_start(list), result);
   status &= assert(list->length, 0);
+  status &= assert((int)list->first, (int)NULL);
+  status &= assert((int)list->last, (int)NULL);
   display_assertion(status, "should not remove the item from the list if the list is empty\n");
 
   clear_list(list);
@@ -242,14 +244,20 @@ void test_remove_from_end(List_ptr list)
 
   int status = assert_element(remove_from_end(list), num2);
   status &= assert(list->length, 1);
-  display_assertion(status, "should remove the last item from the list");
+  status &= assert_element(list->first->element, num1);
+  status &= assert_element(list->last->element, num1);
+  display_assertion(status, "should remove the last item in the list");
 
   status = assert_element(remove_from_end(list), num1);
   status &= assert(list->length, 0);
+  status &= assert((int)list->first, (int)NULL);
+  status &= assert((int)list->last, (int)NULL);
   display_assertion(status, "should remove the first item from the list if there is only one item");
 
   status = assert_element(remove_from_end(list), NULL);
   status &= assert(list->length, 0);
+  status &= assert((int)list->first, (int)NULL);
+  status &= assert((int)list->last, (int)NULL);
   display_assertion(status, "should not remove the item from the list if the list is empty\n");
 
   clear_list(list);
