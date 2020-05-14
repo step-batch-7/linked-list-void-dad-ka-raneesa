@@ -5,6 +5,7 @@
 void display_element(Element element);
 void display_list(List_ptr list);
 Status are_elements_equal(Element element1, Element element2);
+Element add_one(Element element);
 
 void display_element(Element element)
 {
@@ -28,6 +29,12 @@ Status are_elements_equal(Element element1, Element element2)
   Int_ptr num1 = (Int_ptr)element1;
   Int_ptr num2 = (Int_ptr)element2;
   return num1 == num2;
+}
+
+Element add_one(Element element){
+  Element new_element = malloc(sizeof(Element));
+  *(int *)new_element = (*(int *)element) + 1;
+  return new_element;
 }
 
 int main(){
@@ -90,5 +97,10 @@ int main(){
 
   printf("\nForeach\n");
   forEach(list, &display_element);
+
+  printf("\nmap\n");
+  result = map(list, &add_one);
+  display_list(list);
+  display_list(result);
   return 0;
 }
