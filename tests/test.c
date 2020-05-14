@@ -367,7 +367,45 @@ void test_forEach(List_ptr list){
   forEach(list, &add_one);
   status = assert_list(list, result);
   status &= assert(result->length, 2);
-  display_assertion(status, "should give list with elements of incremented value");
+  display_assertion(status, "should give list with elements of incremented value\n");
+  
+  clear_list(list);
+}
+
+
+Element increment_by_one(Element element){
+  Element new_element = malloc(sizeof(Element));
+  *(int *)new_element = (*(int *)element) + 1;
+  return new_element;
+}
+
+void test_map(List_ptr list){
+  PRINT_STRING("map");
+
+  List_ptr result = create_list();
+  int status = assert_list(map(list, &increment_by_one), result);
+  status &= assert(result->length, 0);
+  display_assertion(status, "should give empty list when give empty list");
+
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  add_to_list(list, num1);
+  add_to_list(list, num2);
+
+  int *num3 = malloc(sizeof(int));
+  int *num4 = malloc(sizeof(int));
+  *num3 = 2;
+  *num4 = 3;
+  add_to_list(result, num3);
+  add_to_list(result, num4);
+  
+  status = assert_list(map(list, &increment_by_one), result);
+  status &= assert(result->length, 2);
+  display_assertion(status, "should increment values by one");
+
+  clear_list(list);
 }
 
 int main(void){
@@ -384,6 +422,7 @@ int main(void){
   test_remove_first_occurrence(list);
   test_reverse(list);
   test_forEach(list);
+  test_map(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
