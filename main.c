@@ -6,6 +6,7 @@ void display_element(Element element);
 void display_list(List_ptr list);
 Status are_elements_equal(Element element1, Element element2);
 Element add_one(Element element);
+Status is_even(Element element);
 
 void display_element(Element element)
 {

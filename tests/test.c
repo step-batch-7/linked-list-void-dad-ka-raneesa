@@ -408,6 +408,41 @@ void test_map(List_ptr list){
   clear_list(list);
 }
 
+Status is_even(Element element){
+  if((*(int *)element) % 2 == 0){
+    return Success;
+  }
+  return Failure;
+}
+
+void test_filter(List_ptr list){
+  PRINT_STRING("map");
+
+  List_ptr result = create_list();
+  int status = assert_list(filter(list, &is_even), result);
+  status &= assert(result->length, 0);
+  display_assertion(status, "should give empty list when give empty list");
+
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  int *num3 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  *num3 = 4;
+  add_to_list(list, num1);
+  add_to_list(list, num2);
+  add_to_list(list, num3);
+
+  add_to_list(result, num2);
+  add_to_list(result, num3);
+  
+  status = assert_list(filter(list, &is_even), result);
+  status &= assert(list->length, 3);
+  display_assertion(status, "should all evens in the list");
+
+  clear_list(list);
+}
+
 int main(void){
   List_ptr list = create_list();
 
@@ -423,6 +458,7 @@ int main(void){
   test_reverse(list);
   test_forEach(list);
   test_map(list);
+  test_filter(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);

@@ -12,6 +12,7 @@
 int PASSING_TESTS = 0;
 int FAILING_TESTS = 0;
 
+Status is_even(Element element);
 Element increment_by_one(Element element);
 void add_one(Element value);
 Status assert_element(Element element1, Element element2);
@@ -31,5 +32,6 @@ void test_remove_first_occurrence(List_ptr list);
 void test_reverse(List_ptr list);
 void test_forEach(List_ptr list);
 void test_map(List_ptr list);
+void test_filter(List_ptr list);
 
 #endif
