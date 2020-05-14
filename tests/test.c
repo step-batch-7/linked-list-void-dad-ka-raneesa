@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../linkedlist.h"
 #include "test.h"
 
 Status assert_element(Element element1, Element element2)
 {
-  Int_ptr num1 = (Int_ptr)element1;
-  Int_ptr num2 = (Int_ptr)element2;
+  int *num1 = (int *)element1;
+  int *num2 = (int *)element2;
   if(num1 == 0 && num2 == 0){
     return Success;
   }
@@ -27,7 +28,7 @@ Status assert_list(List_ptr list1, List_ptr list2){
   Node_ptr p_walk1 = list1->first;
   Node_ptr p_walk2 = list2->first;
   while(p_walk1 != NULL){
-    assertion_status &= assert_element(p_walk1, p_walk2);
+    assertion_status &= assert_element(p_walk1->element, p_walk2->element);
     p_walk1 = p_walk1->next;
     p_walk2 = p_walk2->next;
   }
@@ -70,15 +71,15 @@ void test_search_node(List_ptr list)
 {
   int *num1 = malloc(sizeof(int));
   *num1 = 1;
-  add_to_list(list, &num1);
+  add_to_list(list, num1);
 
   PRINT_STRING("search_node");
-  int status = assert(search_position(list, &num1, &assert_element), 0);
+  int status = assert(search_position(list, num1, &assert_element), 0);
   display_assertion(status, "should give the position if the item is present in the list");
 
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  status = assert(search_position(list, &num2, &assert_element), -1);
+  status = assert(search_position(list, num2, &assert_element), -1);
   display_assertion(status, "should give -1 if the item is not present in the list\n");
   
   clear_list(list);
@@ -89,15 +90,15 @@ void test_add_to_list(List_ptr list){
 
   int *num1 = malloc(sizeof(int));
   *num1 = 1;
-  int status = assert(add_to_list(list, &num1), Success);
-  status &= assert(search_position(list, &num1, &assert_element), 0);
+  int status = assert(add_to_list(list, num1), Success);
+  status &= assert(search_position(list, num1, &assert_element), 0);
   status &= assert(list->length, 1);
   display_assertion(status, "should add the given number at the beginning if list is empty of the list");
 
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  status = assert(add_to_list(list, &num2), Success);
-  status &= assert(search_position(list, &num2, &assert_element), 1);
+  status = assert(add_to_list(list, num2), Success);
+  status &= assert(search_position(list, num2, &assert_element), 1);
   status &= assert(list->length, 2);
   display_assertion(status, "should add the given number at the end of the list\n");
 
@@ -109,15 +110,15 @@ void test_add_to_start(List_ptr list){
 
   int *num1 = malloc(sizeof(int));
   *num1 = 1;
-  int status = assert(add_to_start(list, &num1), Success);
-  status &= assert(search_position(list, &num1, &assert_element), 0);
+  int status = assert(add_to_start(list, num1), Success);
+  status &= assert(search_position(list, num1, &assert_element), 0);
   status &= assert(list->length, 1);
   display_assertion(status, "should add the given number at the beginning if list is empty of the list");
 
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  status = assert(add_to_start(list, &num2), Success);
-  status &= assert(search_position(list, &num2, &assert_element), 0);
+  status = assert(add_to_start(list, num2), Success);
+  status &= assert(search_position(list, num2, &assert_element), 0);
   status &= assert(list->length, 2);
   display_assertion(status, "should add the given number at the begginging of the list\n");
 
@@ -130,41 +131,41 @@ void test_insert_at(List_ptr list)
   *num1 = 1;
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  add_to_list(list, &num1);
-  add_to_list(list, &num2);
+  add_to_list(list, num1);
+  add_to_list(list, num2);
 
   PRINT_STRING("insert_at");
 
   int *num3 = malloc(sizeof(int));
   *num3 = 3;
-  int status = assert(insert_at(list, &num3, 2), Success);
-  status &= assert(search_position(list, &num3, &assert_element), 2);
+  int status = assert(insert_at(list, num3, 2), Success);
+  status &= assert(search_position(list, num3, &assert_element), 2);
   status &= assert(list->length, 3);
   display_assertion(status, "should add the given number at the end of the list");
 
   int *num4 = malloc(sizeof(int));
   *num4 = 4;
-  status = assert(insert_at(list, &num4, 0), Success);
-  status &= assert(search_position(list, &num4, &assert_element), 0);
+  status = assert(insert_at(list, num4, 0), Success);
+  status &= assert(search_position(list, num4, &assert_element), 0);
   status &= assert(list->length, 4);
   display_assertion(status, "should add the given number at the beginning of the list");
 
   int *num5 = malloc(sizeof(int));
   *num5 = 5;
-  status = assert(insert_at(list, &num5, 2), Success);
-  status &= assert(search_position(list, &num5, &assert_element), 2);
+  status = assert(insert_at(list, num5, 2), Success);
+  status &= assert(search_position(list, num5, &assert_element), 2);
   status &= assert(list->length, 5);
   display_assertion(status, "should add the given number at the given position of the list");
 
   int *num6 = malloc(sizeof(int));
   *num6 = 6;
-  status = assert(insert_at(list, &num6, 9), Failure);
-  status &= assert(search_position(list, &num6, &assert_element), -1);
+  status = assert(insert_at(list, num6, 9), Failure);
+  status &= assert(search_position(list, num6, &assert_element), -1);
   status &= assert(list->length, 5);
   display_assertion(status, "should not add the given number if the given position is below 0");
 
-  status = assert(insert_at(list, &num6, -9), Failure);
-  status &= assert(search_position(list, &num6, &assert_element), -1);
+  status = assert(insert_at(list, num6, -9), Failure);
+  status &= assert(search_position(list, num6, &assert_element), -1);
   status &= assert(list->length, 5);
   display_assertion(status, "should not add the given number if the given position is above list count\n");
 
@@ -177,20 +178,20 @@ void test_add_unique(List_ptr list)
 
   int *num1 = malloc(sizeof(int));
   *num1 = 1;
-  int status = assert(add_unique(list, &num1, &assert_element), Success);
-  status &= assert(search_position(list, &num1, &assert_element), 0);
+  int status = assert(add_unique(list, num1, &assert_element), Success);
+  status &= assert(search_position(list, num1, &assert_element), 0);
   status &= assert(list->length, 1);
   display_assertion(status, "should add the given number in the list if list is empty");
 
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  status = assert(add_unique(list, &num2, &assert_element), Success);
-  status &= assert(search_position(list, &num2, &assert_element), 1);
+  status = assert(add_unique(list, num2, &assert_element), Success);
+  status &= assert(search_position(list, num2, &assert_element), 1);
   status &= assert(list->length, 2);
   display_assertion(status, "should add the given number in the list if not exists");
 
-  status = assert(add_unique(list, &num1, &assert_element), Failure);
-  status &= assert(search_position(list, &num1, &assert_element), 0);
+  status = assert(add_unique(list,&num1, &assert_element), Failure);
+  status &= assert(search_position(list, num1, &assert_element), 0);
   status &= assert(list->length, 1);
   display_assertion(status, "should not add the given number in the list if exists\n");
 
@@ -201,11 +202,11 @@ void test_remove_from_start(List_ptr list)
 {
   int *num = malloc(sizeof(int));
   *num = 1;
-  add_to_list(list, &num);
+  add_to_list(list, num);
 
   PRINT_STRING("remove_from_start");
 
-  int status = assert_element(remove_from_start(list), &num);
+  int status = assert_element(remove_from_start(list), num);
   status &= assert(list->length, 0);
   display_assertion(status, "should remove the first item from the list");
 
@@ -221,18 +222,18 @@ void test_remove_from_end(List_ptr list)
 {
   int *num1 = malloc(sizeof(int));
   *num1 = 1;
-  add_to_list(list, &num1);
+  add_to_list(list, num1);
   int *num2 = malloc(sizeof(int));
   *num2 = 2;
-  add_to_list(list, &num2);
+  add_to_list(list, num2);
 
   PRINT_STRING("remove_from_end");
 
-  int status = assert_element(remove_from_end(list), &num2);
+  int status = assert_element(remove_from_end(list), num2);
   status &= assert(list->length, 1);
   display_assertion(status, "should remove the last item from the list");
 
-  status = assert_element(remove_from_end(list), &num1);
+  status = assert_element(remove_from_end(list), num1);
   status &= assert(list->length, 0);
   display_assertion(status, "should remove the first item from the list if there is only one item");
 
@@ -255,23 +256,23 @@ void test_remove_at(List_ptr list)
   *num3 = 3;
   *num4 = 4;
   *num5 = 5;
-  add_to_list(list, &num1);
-  add_to_list(list, &num2);
-  add_to_list(list, &num3);
-  add_to_list(list, &num4);
-  add_to_list(list, &num5);
+  add_to_list(list, num1);
+  add_to_list(list, num2);
+  add_to_list(list, num3);
+  add_to_list(list, num4);
+  add_to_list(list, num5);
 
   PRINT_STRING("remove_at");
 
-  int status = assert_element(remove_at(list, 4), &num5);
+  int status = assert_element(remove_at(list, 4), num5);
   status &= assert(list->length, 4);
   display_assertion(status, "should remove the given number at the end of the list");
 
-  status = assert_element(remove_at(list, 0), &num1);
+  status = assert_element(remove_at(list, 0), num1);
   status &= assert(list->length, 3);
   display_assertion(status, "should remove the given number at the beginning of the list");
 
-  status = assert_element(remove_at(list, 1), &num3);
+  status = assert_element(remove_at(list, 1), num3);
   status &= assert(list->length, 2);
   display_assertion(status, "should remove the given number at the given position of the list");
 
@@ -292,18 +293,18 @@ void test_remove_first_occurrence(List_ptr list)
   int *num2 = malloc(sizeof(int));
   *num1 = 1;
   *num2 = 2;
-  add_to_list(list, &num1);
-  add_to_list(list, &num2);
+  add_to_list(list, num1);
+  add_to_list(list, num2);
 
   PRINT_STRING("remove_first_occurrence");
 
-  int status = assert_element(remove_first_occurrence(list, &num1, &assert_element), &num1);
-  status &= assert(search_position(list, &num1, &assert_element), -1);
+  int status = assert_element(remove_first_occurrence(list, num1, &assert_element), num1);
+  status &= assert(search_position(list, num1, &assert_element), -1);
   status &= assert(list->length, 1);
   display_assertion(status, "should remove first occurrence of the given number in the list if exists");
 
-  status = assert_element(remove_first_occurrence(list, &num1, &assert_element), NULL);
-  status &= assert(search_position(list, &num1, &assert_element), -1);
+  status = assert_element(remove_first_occurrence(list, num1, &assert_element), NULL);
+  status &= assert(search_position(list, num1, &assert_element), -1);
   status &= assert(list->length, 1);
   display_assertion(status, "should not remove first occurrence of the given number in the list if not exists\n");
 
@@ -315,8 +316,8 @@ void test_reverse(List_ptr list){
   int *num2 = malloc(sizeof(int));
   *num1 = 1;
   *num2 = 2;
-  add_to_list(list, &num1);
-  add_to_list(list, &num2);
+  add_to_list(list, num1);
+  add_to_list(list, num2);
 
   List_ptr result = create_list();
 
@@ -325,12 +326,48 @@ void test_reverse(List_ptr list){
   status &= assert(result->length, 0);
   display_assertion(status, "should give empty list when give empty array");
 
-  add_to_list(result, &num2);
-  add_to_list(result, &num1);
+  add_to_list(result, num2);
+  add_to_list(result, num1);
 
   status = assert_list(reverse(list), result);
   status &= assert(list->length, 2);
-  display_assertion(status, "should reverse the elements in the list");
+  display_assertion(status, "should reverse the elements in the list\n");
+
+  clear_list(list);
+}
+
+void add_one(Element value){
+  int incremented_value = (*(int *)value) + 1;
+  memcpy(value, &incremented_value, sizeof(incremented_value));
+}
+
+void test_forEach(List_ptr list){
+  PRINT_STRING("forEach");
+
+  List_ptr result = create_list();
+  forEach(list, &add_one);
+  int status = assert_list(list, result);
+  status &= assert(result->length, 0);
+  display_assertion(status, "should give empty list when give empty list");
+
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  add_to_list(list, num1);
+  add_to_list(list, num2);
+
+  int *num3 = malloc(sizeof(int));
+  int *num4 = malloc(sizeof(int));
+  *num3 = 2;
+  *num4 = 3;
+  add_to_list(result, num3);
+  add_to_list(result, num4);
+  
+  forEach(list, &add_one);
+  status = assert_list(list, result);
+  status &= assert(result->length, 2);
+  display_assertion(status, "should give list with elements of incremented value");
 }
 
 int main(void){
@@ -346,6 +383,7 @@ int main(void){
   test_remove_at(list);
   test_remove_first_occurrence(list);
   test_reverse(list);
+  test_forEach(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);
