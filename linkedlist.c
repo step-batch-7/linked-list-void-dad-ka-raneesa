@@ -256,6 +256,17 @@ List_ptr filter(List_ptr list, Predicate predicate){
   return new_list;
 }
 
+Element reduce(List_ptr list, Element init, Reducer reducer){
+  Element result = malloc(sizeof(Element));
+  (*(Int_ptr)result) = (*(Int_ptr)init);
+  Node_ptr p_walk = list->first;
+  while(p_walk != NULL){
+    result = reducer(p_walk->element, result);
+    p_walk = p_walk->next;
+  }
+  return result;
+}
+
 Status clear_list(List_ptr list){
   if(list->first == NULL){
     return Failure;

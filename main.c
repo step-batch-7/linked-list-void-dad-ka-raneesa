@@ -34,15 +34,21 @@ Status are_elements_equal(Element element1, Element element2)
 
 Element add_one(Element element){
   Element new_element = malloc(sizeof(Element));
-  *(int *)new_element = (*(int *)element) + 1;
+  *(Int_ptr)new_element = (*(Int_ptr)element) + 1;
   return new_element;
 }
 
 Status is_even(Element element){
-  if((*(int *)element) % 2 == 0){
+  if((*(Int_ptr)element) % 2 == 0){
     return Success;
   }
   return Failure;
+}
+
+Element sum(Element element1, Element element2){
+  Element sum = malloc(sizeof(Element));
+  *(Int_ptr)sum = *(Int_ptr) element1 + *(Int_ptr) element2;
+  return sum;
 }
 
 int main(){
@@ -111,9 +117,24 @@ int main(){
   display_list(list);
   display_list(result);
 
-  printf("\nmap\n");
+  printf("\nfilter\n");
   result = filter(list, &is_even);
   display_list(list);
   display_list(result);
+
+  printf("\nreduce\n");
+  Element init = malloc(sizeof(Element));
+  *(Int_ptr)init = 0;
+  init = reduce(list, init, &sum);
+  display_list(list);
+  printf("sum(with initial 0): ");
+  display_element(init);
+  printf("\n");
+
+  *(Int_ptr)init = 10;
+  init = reduce(list, init, &sum);
+  display_list(list);
+  printf("sum(with initial 10): ");
+  display_element(init);
   return 0;
 }
