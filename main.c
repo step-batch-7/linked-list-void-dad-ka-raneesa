@@ -37,6 +37,13 @@ Element add_one(Element element){
   return new_element;
 }
 
+Status is_even(Element element){
+  if((*(int *)element) % 2 == 0){
+    return Success;
+  }
+  return Failure;
+}
+
 int main(){
   int numbers[] = {1,2,3,4};
   Int_ptr ptr_to_numbers = numbers;
@@ -100,6 +107,11 @@ int main(){
 
   printf("\nmap\n");
   result = map(list, &add_one);
+  display_list(list);
+  display_list(result);
+
+  printf("\nmap\n");
+  result = filter(list, &is_even);
   display_list(list);
   display_list(result);
   return 0;
