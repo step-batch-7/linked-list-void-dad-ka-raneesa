@@ -403,7 +403,7 @@ void test_map(List_ptr list){
   
   status = assert_list(map(list, &increment_by_one), result);
   status &= assert(result->length, 2);
-  display_assertion(status, "should increment values by one");
+  display_assertion(status, "should increment values by one\n");
 
   clear_list(list);
 }
@@ -416,7 +416,7 @@ Status is_even(Element element){
 }
 
 void test_filter(List_ptr list){
-  PRINT_STRING("map");
+  PRINT_STRING("filter");
 
   List_ptr result = create_list();
   int status = assert_list(filter(list, &is_even), result);
@@ -438,7 +438,42 @@ void test_filter(List_ptr list){
   
   status = assert_list(filter(list, &is_even), result);
   status &= assert(list->length, 3);
-  display_assertion(status, "should all evens in the list");
+  display_assertion(status, "should all evens in the list\n");
+
+  clear_list(list);
+}
+
+Element sum(Element element1, Element element2){
+  Element sum = malloc(sizeof(Element));
+  *(Int_ptr)sum = *(Int_ptr) element1 + *(Int_ptr) element2;
+  return sum;
+}
+
+void test_reduce(List_ptr list){
+  PRINT_STRING("reduce");
+
+  int *num1 = malloc(sizeof(int));
+  int *num2 = malloc(sizeof(int));
+  int *num3 = malloc(sizeof(int));
+  *num1 = 1;
+  *num2 = 2;
+  *num3 = 3;
+  add_to_list(list, num1);
+  add_to_list(list, num2);
+  add_to_list(list, num3);
+
+  Element init = malloc(sizeof(Element));
+  (*(int *)init) = 0;
+
+  Element result = malloc(sizeof(Element));
+  (*(int *)result) = 6;
+  int status = assert_element(reduce(list, init, &sum), result);
+  display_assertion(status, "should give sum of all elements");
+
+  (*(int *)init) = 10;
+  (*(int *)result) = 16;
+  status = assert_element(reduce(list, init, &sum), result);
+  display_assertion(status, "should give sum of all elements with initial value");
 
   clear_list(list);
 }
@@ -459,6 +494,7 @@ int main(void){
   test_forEach(list);
   test_map(list);
   test_filter(list);
+  test_reduce(list);
 
   printf(GREEN "\n%d passing" RESET, PASSING_TESTS);
   printf(RED "\n%d failing\n" RESET, FAILING_TESTS);

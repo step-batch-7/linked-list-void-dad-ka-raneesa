@@ -14,6 +14,7 @@ int FAILING_TESTS = 0;
 
 Status is_even(Element element);
 Element increment_by_one(Element element);
+Element sum(Element element1, Element element2);
 void add_one(Element value);
 Status assert_element(Element element1, Element element2);
 Status assert_list(List_ptr list1, List_ptr list2);
@@ -33,5 +34,6 @@ void test_reverse(List_ptr list);
 void test_forEach(List_ptr list);
 void test_map(List_ptr list);
 void test_filter(List_ptr list);
+void test_reduce(List_ptr list);
 
 #endif
