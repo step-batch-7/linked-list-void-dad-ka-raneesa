@@ -83,5 +83,9 @@ int main(){
   display_list(list);
   printf("removed elements:");
   display_list(result);
+
+  printf("\nreverse the list:\n");
+  result = reverse(list);
+  display_list(result);
   return 0;
 }
