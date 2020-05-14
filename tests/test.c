@@ -200,15 +200,26 @@ void test_add_unique(List_ptr list)
 
 void test_remove_from_start(List_ptr list)
 {
-  int *num = malloc(sizeof(int));
-  *num = 1;
-  add_to_list(list, num);
+  int *num1 = malloc(sizeof(int));
+  *num1 = 1;
+  add_to_list(list, num1);
+  int *num2 = malloc(sizeof(int));
+  *num2 = 1;
+  add_to_list(list, num2);
 
   PRINT_STRING("remove_from_start");
 
-  int status = assert_element(remove_from_start(list), num);
+  int status = assert_element(remove_from_start(list), num1);
+  status &= assert(list->length, 1);
+  status &= assert_element(list->first->element, num2);
+  status &= assert_element(list->last->element, num2);
+  display_assertion(status, "should remove the first item in the list");
+
+  status = assert_element(remove_from_start(list), num2);
   status &= assert(list->length, 0);
-  display_assertion(status, "should remove the first item from the list");
+  status &= assert((int)list->first, (int)NULL);
+  status &= assert((int)list->last, (int)NULL);
+  display_assertion(status, "should remove the first item in a single list");
 
   Element result = NULL;
   status = assert_element(remove_from_start(list), result);
