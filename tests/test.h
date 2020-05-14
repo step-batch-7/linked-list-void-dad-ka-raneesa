@@ -13,6 +13,7 @@ int PASSING_TESTS = 0;
 int FAILING_TESTS = 0;
 
 Status assert_element(Element element1, Element element2);
+Status assert_list(List_ptr list1, List_ptr list2);
 Status assert(int actual, int expected);
 void display_assertion(Status assertion_status, char *message);
 
@@ -25,5 +26,6 @@ void test_remove_from_start(List_ptr list);
 void test_remove_from_end(List_ptr list);
 void test_remove_at(List_ptr list);
 void test_remove_first_occurrence(List_ptr list);
+void test_reverse(List_ptr list);
 
 #endif
