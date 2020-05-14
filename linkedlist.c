@@ -94,22 +94,14 @@ Status add_unique(List_ptr list, Element element, Matcher matcher)
   return add_to_list(list, element);
 }
 
-Status remove_from_empty_list(Node_ptr node)
-{
-  if (node == NULL)
-  {
-    return Failure;
-  }
-  return Success;
-}
-
 Element remove_from_start(List_ptr list)
 { 
   Element removed_element = NULL;
-  if (remove_from_empty_list(list->first))
+  Node_ptr first = list->first;
+  if (first != NULL)
   {
-    removed_element = list->first->element;
-    Node_ptr next_node = list->first->next;
+    removed_element = first->element;
+    Node_ptr next_node = first->next;
     if (list->length == 1)
     {
       list->last = next_node;
