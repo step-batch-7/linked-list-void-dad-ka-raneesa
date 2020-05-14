@@ -94,21 +94,6 @@ Status add_unique(List_ptr list, Element element, Matcher matcher)
   return add_to_list(list, element);
 }
 
-int search_position(List_ptr list, Element element, Matcher matcher){
-  Node_ptr p_walk = list->first;
-  int position = 0;
-  while (p_walk != NULL)
-  {
-    if (matcher(p_walk->element, element))
-    {
-      return position;
-    }
-    p_walk = p_walk->next;
-    position++;
-  }
-  return -1;
-}
-
 Status remove_from_empty_list(Node_ptr node)
 {
   if (node == NULL)
@@ -191,7 +176,23 @@ Element remove_at(List_ptr list, int position){
   return remove_element_at(list, position);
 }
 
-Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher){
+int search_position(List_ptr list, Element element, Matcher matcher)
+{
+  Node_ptr p_walk = list->first;
+  int position = 0;
+  while (p_walk != NULL)
+  {
+    if (matcher(p_walk->element, element))
+    {
+      return position;
+    }
+    p_walk = p_walk->next;
+    position++;
+  }
+  return -1;
+}
+Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
+{
   int position = search_position(list, element, matcher);
   if (position != -1)
   {
@@ -199,31 +200,19 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
   }
   return NULL;
 }
-
-Status check_is_exist(List_ptr list, Element element, Matcher matcher)
+List_ptr remove_all_occurrences(List_ptr list, Element element, Matcher matcher)
 {
-  int position = search_position(list, element, matcher);
-  if (position != -1)
+  List_ptr removed_elements = create_list();
+  Element removed_element;
+  Node_ptr p_walk = list->first;
+  while (p_walk != NULL)
   {
-    return Success;
+    removed_element = remove_first_occurrence(list, element, matcher);
+    p_walk = p_walk->next;
+    if (removed_element)
+      add_to_list(removed_elements, removed_element);
   }
-  return Failure;
-}
-
-List_ptr remove_all_occurrences(List_ptr list, Element element, Matcher matcher){
-  int count = 0;
-  int position;
-  if (check_is_exist(list, element, matcher))
-  {
-    while (count < list->length)
-    {
-      position = search_position(list, element, matcher);
-      remove_at(list, position);
-      if (position == -1)
-        return list;
-    }
-  }
-  return NULL;
+  return removed_elements;
 }
 
 Status clear_list(List_ptr list){
